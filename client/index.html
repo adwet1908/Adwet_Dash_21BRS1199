@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Chess Game</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="js/app.js" defer></script>
+    <script src="js/gameLogic.js" defer></script>
+    <script src="js/ui.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar left">
+            <ul class="tabs">
+                <li class="tab" onclick="showTab('rules')">Game Rules</li>
+                <li class="tab" onclick="showTab('profile')">Player Profile</li>
+                <li class="tab" onclick="showTab('online')">Online Match</li>
+                <li class="tab" onclick="showTab('computer')">Match Against Computer</li>
+            </ul>
+            <div id="rules" class="tab-content">
+                <h2>Game Rules</h2>
+                <ul>
+                    <li>Pawns (P1, P2): Move one block in any direction.</li>
+                    <li>Hero1 (H1): Moves one or two blocks straight and captures any piece in its path when moving two blocks.</li>
+                    <li>Hero2 (H2): Moves one or two blocks diagonally and captures any piece in its path when moving two blocks.</li>
+                    <li>Hero3 (H3): Moves two steps straight and one step sideways, capturing only at its final position.</li>
+                </ul>
+                <h3>Win Condition</h3>
+                <p>The game ends when one player eliminates all of their opponent's pieces.</p>
+            </div>
+            <div id="profile" class="tab-content" style="display:none;">
+                <h2>Player Profile</h2>
+                <input type="text" id="player-name" placeholder="Enter your name" onblur="saveProfile()">
+                <input type="number" id="player-rating" placeholder="Enter your rating" onblur="saveProfile()">
+                <input type="file" id="player-photo" accept="image/*" onchange="previewImage()">
+                <img id="photo-preview" src="" alt="Photo Preview" style="display:none; width:100px;">
+            </div>
+            <div id="online" class="tab-content" style="display:none;">
+                <h2>Online Match</h2>
+                <p>Online match settings go here.</p>
+            </div>
+            <div id="computer" class="tab-content" style="display:none;">
+                <h2>Match Against Computer</h2>
+                <p>Computer match settings go here.</p>
+            </div>
+        </div>
+        <div class="main">
+            <h1>Mini Chess Game</h1>
+            <div id="board"></div>
+            <p id="message"></p>
+            <div class="buttons">
+                <button onclick="restartGame()" class="restart-button">Restart Match</button>
+                <button onclick="rematch()" class="rematch-button">Rematch</button>
+            </div>
+        </div>
+        <div class="sidebar right">
+            <div id="move-history" class="move-history">
+                <h3>Move History</h3>
+                <ul></ul>
+            </div>
+            <div id="chat" class="chat">
+                <h3>Chat</h3>
+                <div id="chat-messages" class="chat-messages"></div>
+                <input type="text" id="chat-input" placeholder="Type your message..." onkeydown="if(event.key === 'Enter') sendMessage()">
+                <button onclick="sendMessage()">Send</button>
+                <button onclick="clearChat()" class="clear-chat-button">🗑️</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
